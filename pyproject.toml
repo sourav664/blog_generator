@@ -10,3 +10,12 @@ dependencies = [
     "langchain-groq>=1.1.2",
     "structlog>=25.5.0",
 ]
+
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["workflows", "api", "config", "schemas", "database", "logger", "exception", "prompt_library"]
+exclude = ["notebooks", "logs", "images", "generated_blogs"]
