@@ -1,0 +1,11 @@
+{"timestamp": "2026-04-13T06:41:07.778199Z", "level": "info", "event": "Initializing ApiKeyManager"}
+{"timestamp": "2026-04-13T06:41:07.778569Z", "level": "info", "event": "OPENAI_API_KEY loaded successfully from environment"}
+{"timestamp": "2026-04-13T06:41:07.778816Z", "level": "info", "event": "GOOGLE_API_KEY loaded successfully from environment"}
+{"timestamp": "2026-04-13T06:41:07.779003Z", "level": "warning", "event": "GROQ_API_KEY is missing in environment variables"}
+{"path": "C:\\Users\\soura\\OneDrive\\Desktop\\blog_generator\\config\\configuration.yaml", "keys": ["llm"], "timestamp": "2026-04-13T06:41:07.780866Z", "level": "info", "event": "Configuration loaded successfully"}
+{"config_keys": ["llm"], "timestamp": "2026-04-13T06:41:07.781297Z", "level": "info", "event": "YAML configuration loaded successfully"}
+{"provider": "openai", "model": "gpt-4o", "timestamp": "2026-04-13T06:41:07.781812Z", "level": "info", "event": "Loading LLM"}
+{"provider": "openai", "model": "gpt-4o", "timestamp": "2026-04-13T06:41:08.584845Z", "level": "info", "event": "LLM loaded successfully"}
+{"provider": "openai", "model": "gpt-4o", "timestamp": "2026-04-13T06:41:08.585220Z", "level": "info", "event": "Loading LLM"}
+HTTP Request: POST https://api.openai.com/v1/images/generations "HTTP/1.1 400 Bad Request"
+{"error": "Error code: 400 - {'error': {'message': \"Invalid type for 'prompt': expected a string, but got null instead.\", 'type': 'invalid_request_error', 'param': 'prompt', 'code': 'invalid_type'}}", "timestamp": "2026-04-13T06:41:11.773686Z", "level": "error", "event": "Error loading Image LLM"}

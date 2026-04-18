@@ -17,5 +17,5 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-include = ["workflows", "api", "config", "schemas", "database", "logger", "exception", "prompt_library"]
+include = ["workflows", "api", "config", "schemas", "database", "logger", "exception", "prompt_library", "utils"]
 exclude = ["notebooks", "logs", "images", "generated_blogs"]

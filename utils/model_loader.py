@@ -7,6 +7,8 @@ from pathlib import Path
 
 # Add project root to sys.path for direct script execution
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import time
+import random
 
 from openai import OpenAI
 from google import genai
@@ -139,71 +141,152 @@ class ModelLoader:
             raise BlogGeneratorException("Failed to load LLM", sys)
         
         
-    def image_model(self, prompt):
+    def load_image_model(self):
         """
-        Load and return a Image-based LLM according to the configured provider.
+        Load and return an image model client along with model name.
 
-        Supported provider:
+        Supported providers:
             - OpenAI
             - Google (Gemini)
 
         Returns:
-            OpenAI | GoogleGenAI | ChatGroq: LLM instance
+            tuple: (client, model_name)
         """
-        
         try:
             llm_block = self.config["llm"]
-            provider_key = os.getenv("LLM_PROVIDER", "openai")
+            provider_key = os.getenv("IMAGE_PROVIDER", "openai")
 
             if provider_key not in llm_block:
-                log.error("LLM provider not found in configuration", provider=provider_key)
-                raise ValueError(f"LLM provider '{provider_key}' not found in configuration")
+                log.error("Image provider not found in configuration", provider=provider_key)
+                raise ValueError(f"Image provider '{provider_key}' not found in configuration")
 
             llm_config = llm_block[provider_key]
             provider = llm_config.get("provider")
             model_name = llm_config.get("model_name")
 
-            log.info("Loading LLM", provider=provider, model=model_name)
-            
-            
+            log.info("Loading Image Model", provider=provider, model=model_name)
+
             if provider == "openai":
                 client = OpenAI(
-                      api_key=self.api_key_mgr.get("OPENAI_API_KEY"),
+                    api_key=self.api_key_mgr.get("OPENAI_API_KEY")
                 )
-                image_generator = client.images.generate(
-                    model=model_name,
-                    prompt=prompt,
-                    size="1024x1024"
-                )
-                
-            elif provider == "google":
-                client = genai.Client(api_key=self.api_key_mgr.get("GOOGLE_API_KEY"))
-                
-                image_generator = client.models.generate_content(
-                                        model=model_name,
-                                        contents=prompt,
-                                        config=types.GenerateContentConfig(
-                                            response_modalities=["IMAGE"],
-                                            safety_settings=[
-                                                types.SafetySetting(
-                                                    category="HARM_CATEGORY_DANGEROUS_CONTENT",
-                                                    threshold="BLOCK_ONLY_HIGH",
-                                                )
-                                            ],
-                                        ),
-                                    )
-                
-            else:
-                log.error("Unsupported LLM provider encountered", provider=provider)
-                raise ValueError(f"Unsupported LLM provider: {provider}")
 
-            log.info("LLM loaded successfully", provider=provider, model=model_name)
-            return image_generator
+            elif provider == "google":
+                client = genai.Client(
+                    api_key=self.api_key_mgr.get("GOOGLE_API_KEY")
+                )
+
+            else:
+                log.error("Unsupported Image provider encountered", provider=provider)
+                raise ValueError(f"Unsupported Image provider: {provider}")
+
+            log.info("Image Model loaded successfully", provider=provider, model=model_name)
+            return client, model_name
 
         except Exception as e:
-            log.error("Error loading Image LLM", error=str(e))
-            raise BlogGeneratorException("Failed to load LLM", sys)
+            log.error("Error loading Image Model", error=str(e))
+            raise BlogGeneratorException("Failed to load Image Model", sys)
+    
+    def generate_image(self, client, model_name, prompt, retries=3, backoff_factor=2):
+        """
+        Generate an image using the provided client and model.
 
+        Args:
+            client: Initialized API client (OpenAI or Google)
+            model_name (str): Model name from config
+            prompt (str): Image generation prompt
+            retries (int): Number of retry attempts
+            backoff_factor (int): Exponential backoff multiplier
+
+        Returns:
+            Image response object
+
+        Raises:
+            BlogGeneratorException
+        """
+        attempt = 0
+
+        while attempt < retries:
+            try:
+                log.info(
+                    "Generating image",
+                    attempt=attempt + 1,
+                    provider=type(client).__name__,
+                    model=model_name
+                )
+
+                # ----------------------------
+                # OpenAI Provider
+                # ----------------------------
+                if hasattr(client, "images"):
+                    response = client.images.generate(
+                        model=model_name,
+                        prompt=prompt,
+                        size="1024x1024"
+                    )
+
+                # ----------------------------
+                # Google Provider (Gemini)
+                # ----------------------------
+                elif hasattr(client, "models"):
+                    response = client.models.generate_content(
+                        model=model_name,
+                        contents=prompt,
+                        config=types.GenerateContentConfig(
+                            response_modalities=["IMAGE"]
+                        ),
+                    )
+
+                else:
+                    log.error("Unsupported client type", client_type=type(client).__name__)
+                    raise ValueError("Unsupported client type")
+
+                log.info(
+                    "Image generated successfully",
+                    attempt=attempt + 1,
+                    model=model_name
+                )
+
+                return response
+
+            except Exception as e:
+                attempt += 1
+
+                log.warning(
+                    "Image generation failed",
+                    attempt=attempt,
+                    error=str(e)
+                )
+
+                if attempt >= retries:
+                    log.error(
+                        "Max retries reached for image generation",
+                        retries=retries,
+                        prompt=prompt[:100]  # avoid logging full prompt if large
+                    )
+                    raise BlogGeneratorException("Image generation failed after retries", sys)
+
+                # Exponential backoff with jitter
+                sleep_time = (backoff_factor ** attempt) + random.uniform(0, 1)
+                log.info("Retrying after backoff", sleep_time=sleep_time)
+
+                time.sleep(sleep_time)
+                
+    def get_image_generator(self):
+        """
+        Returns a callable image generator function
+        """
+
+        client, model_name = self.load_image_model()
+
+        def image_generator(prompt: str):
+            return self.generate_image(
+                client=client,
+                model_name=model_name,
+                prompt=prompt
+            )
+
+        return image_generator
 
 # ----------------------------------------------------------------------
 # Standalone Testing

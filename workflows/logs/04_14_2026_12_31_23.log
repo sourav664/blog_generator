@@ -1,0 +1,56 @@
+{"timestamp": "2026-04-14T07:01:24.919069Z", "level": "info", "event": "Initializing ApiKeyManager"}
+{"timestamp": "2026-04-14T07:01:24.919594Z", "level": "info", "event": "OPENAI_API_KEY loaded successfully from environment"}
+{"timestamp": "2026-04-14T07:01:24.919814Z", "level": "info", "event": "GOOGLE_API_KEY loaded successfully from environment"}
+{"timestamp": "2026-04-14T07:01:24.920024Z", "level": "warning", "event": "GROQ_API_KEY is missing in environment variables"}
+{"path": "C:\\Users\\soura\\OneDrive\\Desktop\\blog_generator\\config\\configuration.yaml", "keys": ["llm"], "timestamp": "2026-04-14T07:01:24.921913Z", "level": "info", "event": "Configuration loaded successfully"}
+{"config_keys": ["llm"], "timestamp": "2026-04-14T07:01:24.922157Z", "level": "info", "event": "YAML configuration loaded successfully"}
+{"provider": "openai", "model": "gpt-4o", "timestamp": "2026-04-14T07:01:24.922994Z", "level": "info", "event": "Loading LLM"}
+{"provider": "openai", "model": "gpt-4o", "timestamp": "2026-04-14T07:01:25.936170Z", "level": "info", "event": "LLM loaded successfully"}
+{"provider": "openai", "model": "gpt-image-1.5", "timestamp": "2026-04-14T07:01:25.936551Z", "level": "info", "event": "Loading Image Model"}
+{"provider": "openai", "model": "gpt-image-1.5", "timestamp": "2026-04-14T07:01:26.259138Z", "level": "info", "event": "Image Model loaded successfully"}
+{"module": "BlogGeneratorWorker", "timestamp": "2026-04-14T07:01:26.259757Z", "level": "info", "event": "Building blog generator graph"}
+{"module": "MergeImagesWorker", "timestamp": "2026-04-14T07:01:26.260982Z", "level": "info", "event": "Building LangGraph Image Workflow"}
+{"module": "MergeImagesWorker", "timestamp": "2026-04-14T07:01:26.274993Z", "level": "info", "event": "LangGraph Image Workflow built successfully"}
+{"module": "BlogGeneratorWorker", "timestamp": "2026-04-14T07:01:26.285484Z", "level": "info", "event": "Built blog generator graph successfully"}
+{"module": "BlogGeneratorWorker", "timestamp": "2026-04-14T07:01:26.289671Z", "level": "info", "event": "Planning blog"}
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+{"module": "BlogGeneratorWorker", "timestamp": "2026-04-14T07:01:28.490694Z", "level": "info", "event": "Planned blog successfully"}
+{"module": "BlogGeneratorWorker", "timestamp": "2026-04-14T07:01:28.491042Z", "level": "info", "event": "Routing blog"}
+{"module": "BlogGeneratorWorker", "timestamp": "2026-04-14T07:01:28.491191Z", "level": "info", "event": "Routed blog successfully"}
+{"module": "BlogGeneratorWorker", "timestamp": "2026-04-14T07:01:28.492002Z", "level": "info", "event": "Outlining blog post"}
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+{"module": "BlogGeneratorWorker", "timestamp": "2026-04-14T07:01:36.022135Z", "level": "info", "event": "Outlined blog post successfully"}
+{"module": "BlogGeneratorWorker", "timestamp": "2026-04-14T07:01:36.022644Z", "level": "info", "event": "Fanouting blog post"}
+{"module": "BlogGeneratorWorker", "timestamp": "2026-04-14T07:01:36.023033Z", "level": "info", "event": "Fanouted blog post successfully"}
+{"module": "BlogGeneratorWorker", "timestamp": "2026-04-14T07:01:36.025917Z", "level": "info", "event": "Writing each section of the blog post"}
+{"module": "BlogGeneratorWorker", "timestamp": "2026-04-14T07:01:36.027700Z", "level": "info", "event": "Writing each section of the blog post"}
+{"module": "BlogGeneratorWorker", "timestamp": "2026-04-14T07:01:36.027947Z", "level": "info", "event": "Writing each section of the blog post"}
+{"module": "BlogGeneratorWorker", "timestamp": "2026-04-14T07:01:36.031065Z", "level": "info", "event": "Writing each section of the blog post"}
+{"module": "BlogGeneratorWorker", "timestamp": "2026-04-14T07:01:36.031423Z", "level": "info", "event": "Writing each section of the blog post"}
+{"module": "BlogGeneratorWorker", "timestamp": "2026-04-14T07:01:36.038136Z", "level": "info", "event": "Writing each section of the blog post"}
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+{"module": "BlogGeneratorWorker", "timestamp": "2026-04-14T07:01:39.241646Z", "level": "info", "event": "Wrote each section of the blog post successfully"}
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+{"module": "BlogGeneratorWorker", "timestamp": "2026-04-14T07:01:41.118310Z", "level": "info", "event": "Wrote each section of the blog post successfully"}
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+{"module": "BlogGeneratorWorker", "timestamp": "2026-04-14T07:01:41.134912Z", "level": "info", "event": "Wrote each section of the blog post successfully"}
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+{"module": "BlogGeneratorWorker", "timestamp": "2026-04-14T07:01:42.307849Z", "level": "info", "event": "Wrote each section of the blog post successfully"}
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+{"module": "BlogGeneratorWorker", "timestamp": "2026-04-14T07:01:42.687525Z", "level": "info", "event": "Wrote each section of the blog post successfully"}
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+{"module": "BlogGeneratorWorker", "timestamp": "2026-04-14T07:01:43.401713Z", "level": "info", "event": "Wrote each section of the blog post successfully"}
+{"module": "MergeImagesWorker", "timestamp": "2026-04-14T07:01:43.405101Z", "level": "info", "event": "Merging content"}
+{"module": "MergeImagesWorker", "timestamp": "2026-04-14T07:01:43.405393Z", "level": "info", "event": "Merged content successfully"}
+{"module": "MergeImagesWorker", "timestamp": "2026-04-14T07:01:43.406102Z", "level": "info", "event": "Deciding on images"}
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+{"module": "MergeImagesWorker", "timestamp": "2026-04-14T07:02:08.529275Z", "level": "info", "event": "Decided on images successfully"}
+{"module": "MergeImagesWorker", "timestamp": "2026-04-14T07:02:08.529899Z", "level": "info", "event": "Generating and placing images"}
+{"module": "MergeImagesWorker", "timestamp": "2026-04-14T07:02:08.530467Z", "level": "info", "event": "Generating image for A diagram showing the process of gradient boosting with decision trees, illustrating how each tree corrects the errors of the previous ones. Include arrows to indicate the iterative process and highlight the role of gradients."}
+{"module": "MergeImagesWorker", "timestamp": "2026-04-14T07:02:08.530626Z", "level": "info", "event": "Generating image bytes"}
+{"attempt": 1, "provider": "OpenAI", "model": "gpt-image-1.5", "timestamp": "2026-04-14T07:02:08.530803Z", "level": "info", "event": "Generating image"}
+HTTP Request: POST https://api.openai.com/v1/images/generations "HTTP/1.1 200 OK"
+{"attempt": 1, "model": "gpt-image-1.5", "timestamp": "2026-04-14T07:02:41.884258Z", "level": "info", "event": "Image generated successfully"}
+{"module": "MergeImagesWorker", "timestamp": "2026-04-14T07:02:41.884691Z", "level": "info", "event": "Generated image successfully"}
+{"module": "MergeImagesWorker", "timestamp": "2026-04-14T07:02:41.885508Z", "level": "info", "event": "Generated image bytes successfully"}
+{"module": "BlogGeneratorWorker", "timestamp": "2026-04-14T07:02:41.890054Z", "level": "info", "event": "Blog generated successfully"}
